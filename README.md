@@ -68,7 +68,8 @@ El objetivo es simplificar la consulta de cotizaciones y unificar en una sola pl
 ## 👨‍💻 Autor
 
 **Desarrollado por [FabriDevelope](https://github.com/FabriDevelope)**  
-CEO & Fundador de **[Evosse](https://github.com/FabriDevelope)** — soluciones digitales, branding y software a medida.
+Links:
+**[FabriDev](https://beacons.ai/fabrideveloper)**
 
 ---
 
