@@ -2,13 +2,13 @@
 
 **TodoDólAR** es una plataforma web moderna y multiplataforma desarrollada para consultar, comparar y visualizar en tiempo real las distintas **cotizaciones del dólar** en **Latinoamérica**, actualmente disponible en:
 
-- 🇦🇷 [Argentina](https://tododolar.netlify.app/ar/inicio)  
-- 🇻🇪 [Venezuela](https://tododolar.netlify.app/ve/inicio)  
-- 🇨🇱 [Chile](https://tododolar.netlify.app/cl/inicio)  
-- 🇧🇷 [Brasil](https://tododolar.netlify.app/br/inicio)  
-- 🇺🇾 [Uruguay](https://tododolar.netlify.app/uy/inicio)
+- 🇦🇷 [Argentina](https://tododolar.fabrictd.com/ar/inicio)  
+- 🇻🇪 [Venezuela](https://tododolar.fabrictd.com/ve/inicio)  
+- 🇨🇱 [Chile](https://tododolar.fabrictd.com/cl/inicio)  
+- 🇧🇷 [Brasil](https://tododolar.fabrictd.com/br/inicio)  
+- 🇺🇾 [Uruguay](https://tododolar.fabrictd.com/uy/inicio)
 
-🌐 Sitio principal: [https://tododolar.netlify.app](https://tododolar.netlify.app)
+🌐 Sitio principal: [https://tododolar.netlify.app](https://tododolar.fabrictd.com)
 
 ---
 
@@ -68,8 +68,6 @@ El objetivo es simplificar la consulta de cotizaciones y unificar en una sola pl
 ## 👨‍💻 Autor
 
 **Desarrollado por [FabriDevelope](https://github.com/FabriDevelope)**  
-Links:
-**[FabriDev](https://beacons.ai/fabrideveloper)**
 
 ---
 
@@ -77,7 +75,7 @@ Links:
 
 | Estado | Hosting | Dominio |
 |:--|:--|:--|
-| 🟢 Online | [Netlify](https://www.netlify.com/) | [tododolar.netlify.app](https://tododolar.netlify.app) |
+| 🟢 Online | [Netlify](https://www.netlify.com/) | [tododolar.netlify.app](https://tododolar.fabrictd.com) |
 
 ---
 
