@@ -1,14 +1,11 @@
-/* DólarCTD — estados-apis.css
-   Estilos adicionales específicos de la página de estado de APIs.
-   Los estilos base ya están en ../css/style.css
-*/
+/* estados-apis.css movido a css/ para seguir la estructura unificada */
+@import url('./style.css');
 
 /* Latencia coloreada */
 .latency-fast   { color: var(--positive); }
 .latency-medium { color: var(--accent-light); }
 .latency-slow   { color: var(--negative); }
 
-/* Pulsación del indicador de estado */
 .status-dot {
     display: inline-block;
     width: 8px;
@@ -23,9 +20,7 @@
     box-shadow: 0 0 6px var(--positive);
 }
 
-.status-dot.offline {
-    background: var(--negative);
-}
+.status-dot.offline { background: var(--negative); }
 
 @keyframes status-pulse {
     0%, 100% { opacity: 1; transform: scale(1); }

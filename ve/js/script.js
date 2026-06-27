@@ -1,128 +1,82 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const apiUrlVE = 'https://ve.dolarapi.com/v1/dolares';
-    const currencyData = {
-        general: []
+/**
+ * DólarCTD — Script de Venezuela (VES)
+ * API: https://ve.dolarapi.com/v1/dolares
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
+
+    DolarCTD.inicializarModal();
+    DolarCTD.initCountryDropdown();
+
+    const SIMBOLO   = 'Bs';
+    const DECIMALES = 2;
+    const API_URL   = 'https://ve.dolarapi.com/v1/dolares';
+    const UPDATE_MS = DolarCTD.UPDATE_MS;
+
+    const ICONOS_FUENTE = {
+        oficial:  'fa-landmark',
+        paralelo: 'fa-dollar-sign',
+        bitcoin:  'fa-bitcoin-sign',
+        criptodivisa: 'fa-bitcoin-sign',
+        permuta:  'fa-arrow-right-arrow-left',
     };
-    const updateInterval = 60000; // 1 minuto
-    let updateTimer;
 
-    // 🔹 Fetch y procesar datos de Venezuela
-    async function fetchCurrencyData() {
+    const NOMBRES_FUENTE = {
+        oficial:  'Dólar Oficial (BCV)',
+        paralelo: 'Dólar Paralelo',
+        bitcoin:  'Dólar Cripto / Bitcoin',
+        criptodivisa: 'Dólar Criptodivisa',
+        permuta:  'Dólar Permuta',
+    };
+
+    async function fetchCotizaciones() {
+        DolarCTD.mostrarSkeletons('general-cards', 3);
         try {
-            const res = await fetch(apiUrlVE);
-            const data = await res.json();
-            console.log('Datos API Venezuela:', data);
+            const res = await fetch(API_URL, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const datos = await res.json();
 
-            currencyData.general = data.map(d => {
-                const promedio = parseFloat(d.promedio) || 0;
-                const buy = promedio;   // promedio como compra
-                const sell = promedio;  // promedio como venta
-                const spread = sell - buy; // siempre 0, pero se puede usar margen si querés
+            // La API de VE devuelve: nombre, promedio, fuente
+            const monedas = datos.map(d => {
+                const promedio = parseFloat(d.promedio) || null;
+                const fuente   = (d.fuente || '').toLowerCase();
                 return {
-                    name: d.nombre,
-                    buy: buy,
-                    sell: sell,
-                    spread: spread,
-                    change: null, // si la API no devuelve variación
-                    icon: d.fuente === 'oficial' ? 'fa-landmark' :
-                          d.fuente === 'paralelo' ? 'fa-dollar-sign' :
-                          d.fuente === 'bitcoin' ? 'fa-bitcoin' : 'fa-money-bill'
+                    nombre:   NOMBRES_FUENTE[fuente] || d.nombre || 'Dólar',
+                    icono:    ICONOS_FUENTE[fuente]   || 'fa-dollar-sign',
+                    compra:   promedio,
+                    venta:    null,
+                    nota:     promedio ? `Promedio: ${DolarCTD.formato.moneda(promedio, SIMBOLO, DECIMALES)}` : null,
+                    variacion: null
                 };
             });
 
-            createCards();
-            resetProgressBar();
-        } catch (e) {
-            console.error('Error API Venezuela:', e);
+            const container = document.getElementById('general-cards');
+            container.innerHTML = '';
+            monedas.forEach((m, i) => {
+                const card = DolarCTD.crearCard(m, { simbolo: SIMBOLO, decimales: DECIMALES });
+                card.style.animationDelay = (i * 0.1) + 's';
+                container.appendChild(card);
+            });
+
+            const updateText = document.getElementById('update-text');
+            if (updateText) updateText.textContent = `Última actualización: ${DolarCTD.formato.horaActual()} · Próxima en 1 minuto`;
+            DolarCTD.progressBar.reiniciar(UPDATE_MS);
+
+        } catch (err) {
+            console.error('[DólarCTD VE] Error:', err);
+            DolarCTD.mostrarError('general-cards', 'Error al cargar cotizaciones de Venezuela');
         }
     }
 
-    // 🔹 Crear cards (igual que antes)
-    function createCards() {
-        const generalContainer = document.getElementById('general-cards');
-        generalContainer.innerHTML = '';
-        currencyData.general.forEach(c => generalContainer.appendChild(createCard(c)));
-    }
+    document.getElementById('calculate-all-btn')?.addEventListener('click', () => {
+        const valor = parseFloat(document.getElementById('currency-input')?.value) || 1;
+        DolarCTD.calcularTodos(valor);
+    });
+    document.getElementById('currency-input')?.addEventListener('keydown', e => {
+        if (e.key === 'Enter') document.getElementById('calculate-all-btn')?.click();
+    });
 
-    function createCard(currency) {
-        const card = document.createElement('div');
-        card.className = 'card';
-        let titleColor = 'var(--primary-color)';
-
-        const cardHTML = `
-            <h3 class="card-title" style="color:${titleColor}">
-                <i class="fas ${currency.icon}"></i> ${currency.name}
-            </h3>
-            <div class="card-values">
-                <div class="card-value"><span>Compra:</span><span class="buy-value">Bs ${currency.buy.toFixed(2)}</span></div>
-                <div class="card-value"><span>Venta:</span><span class="sell-value">Bs ${currency.sell.toFixed(2)}</span></div>
-                <div class="card-spread"><span>Spread:</span><span>Bs ${currency.spread.toFixed(2)}</span></div>
-            </div>
-            <button class="card-btn" data-currency="${encodeURIComponent(JSON.stringify(currency))}">
-                <i class="fas fa-calculator"></i> Calcular
-            </button>
-        `;
-        card.innerHTML = cardHTML;
-
-        card.querySelector('.card-btn').addEventListener('click', () => openCalcModal(currency));
-        return card;
-    }
-
-    // 🔹 Modal (igual que antes)
-    function openCalcModal(currency){
-        const modal = document.getElementById('calc-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const currencyName = document.getElementById('currency-name');
-        const currencyName2 = document.getElementById('currency-name-2');
-        modalTitle.textContent = `Calculadora de ${currency.name}`;
-        currencyName.textContent = currency.name;
-        currencyName2.textContent = currency.name;
-
-        const vesInput = document.getElementById('ves-input');
-        const currencyInputModal = document.getElementById('currency-input-modal');
-        const vesToCurrencyResult = document.getElementById('ves-to-currency-result').querySelector('.result-value');
-        const currencyToVesResult = document.getElementById('currency-to-ves-result').querySelector('.result-value');
-
-        const vesToCurrencyBtn = document.getElementById('ves-to-currency-btn');
-        const currencyToVesBtn = document.getElementById('currency-to-ves-btn');
-
-        vesToCurrencyResult.textContent = '0.00';
-        currencyToVesResult.textContent = 'Bs 0.00';
-        vesInput.value = '';
-        currencyInputModal.value = '';
-
-        vesToCurrencyBtn.onclick = () => {
-            const vesValue = parseFloat(vesInput.value)||0;
-            vesToCurrencyResult.textContent = (vesValue / currency.buy).toFixed(2);
-        };
-        currencyToVesBtn.onclick = () => {
-            const val = parseFloat(currencyInputModal.value)||0;
-            const result = val * currency.buy;
-            currencyToVesResult.textContent = `Bs ${result.toFixed(2)}`;
-        };
-
-        modal.style.display = 'block';
-    }
-
-    document.getElementById('modal-close-btn').addEventListener('click', ()=> modal.style.display='none');
-    document.getElementById('modal-close-footer-btn').addEventListener('click', ()=> modal.style.display='none');
-
-    // 🔹 Barra de actualización
-    let progressBarTimer, progress = 0;
-    const updateBar = document.getElementById('update-bar');
-    function startProgressBar(){
-        clearInterval(progressBarTimer);
-        progress = 0;
-        const step = 100 / (updateInterval / 100);
-        progressBarTimer = setInterval(()=>{
-            progress += step;
-            if(progress >= 100) progress = 100;
-            if(updateBar) updateBar.style.width = progress+'%';
-        }, 100);
-    }
-    function resetProgressBar(){ startProgressBar(); }
-
-    // 🔹 Ejecutar fetch y auto-update
-    fetchCurrencyData();
-    updateTimer = setInterval(fetchCurrencyData, updateInterval);
+    DolarCTD.progressBar.iniciar(UPDATE_MS);
+    fetchCotizaciones();
+    setInterval(fetchCotizaciones, UPDATE_MS);
 });

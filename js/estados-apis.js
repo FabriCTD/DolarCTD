@@ -1,11 +1,10 @@
 /**
- * DólarCTD — Estado de APIs
+ * DólarCTD — Estado de APIs (movido a js/)
  * Monitorea todos los endpoints de DolarAPI en tiempo real
  */
 document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
-    /* ── Configuración de APIs a monitorear ── */
     const APIS = [
         {
             nombre:   'Argentina',
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const onlineApisEl  = document.getElementById('online-apis');
     const offlineApisEl = document.getElementById('offline-apis');
 
-    /* ── Verificar un endpoint ── */
     async function verificarEndpoint(endpoint) {
         const inicio = performance.now();
         try {
@@ -65,22 +63,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const latencia = Math.round(performance.now() - inicio);
             if (!res.ok) return { ...endpoint, ok: false, latencia, error: `HTTP ${res.status}` };
             const datos = await res.json();
-            const cantidad = Array.isArray(datos) ? datos.length : 1;
-            return { ...endpoint, ok: true, latencia, cantidad };
+            return { ...endpoint, ok: true, latencia, cantidad: Array.isArray(datos) ? datos.length : 1 };
         } catch (err) {
-            const latencia = Math.round(performance.now() - inicio);
-            return { ...endpoint, ok: false, latencia, error: err.message };
+            return { ...endpoint, ok: false, latencia: Math.round(performance.now() - inicio), error: err.message };
         }
     }
 
-    /* ── Verificar todos los endpoints de una API ── */
     async function verificarApi(api) {
         const resultados = await Promise.all(api.endpoints.map(verificarEndpoint));
-        const online = resultados.every(r => r.ok);
-        return { ...api, online, endpoints: resultados, verificadoEn: new Date() };
+        return { ...api, online: resultados.every(r => r.ok), endpoints: resultados, verificadoEn: new Date() };
     }
 
-    /* ── Crear card de estado ── */
     function crearCardApi(resultado) {
         const card = document.createElement('div');
         card.className = `api-card ${resultado.online ? 'online' : 'offline'}`;
@@ -96,10 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="api-detail">
                     <span class="api-detail-label">${ep.etiqueta}</span>
                     <span class="api-detail-value" style="color:${ep.ok ? 'var(--positive)' : 'var(--negative)'}">
-                        ${ep.ok
-                            ? `✓ OK · ${ep.latencia}ms · ${ep.cantidad} reg.`
-                            : `✗ ${ep.error}`
-                        }
+                        ${ep.ok ? `✓ OK · ${ep.latencia}ms · ${ep.cantidad} reg.` : `✗ ${ep.error}`}
                     </span>
                 </div>`;
         });
@@ -124,13 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="api-detail-label">Última verificación</span>
                     <span class="api-detail-value">${hora}</span>
                 </div>
-            </div>
-        `;
+            </div>`;
 
         return card;
     }
 
-    /* ── Verificar todas las APIs ── */
     async function verificarTodas() {
         refreshBtn.classList.add('loading');
         refreshBtn.disabled = true;
@@ -142,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         try {
             const resultados = await Promise.all(APIS.map(verificarApi));
-
             container.innerHTML = '';
             resultados.forEach((r, i) => {
                 const card = crearCardApi(r);
@@ -150,21 +137,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.appendChild(card);
             });
 
-            // Resumen
             const online  = resultados.filter(r => r.online).length;
-            const offline = resultados.length - online;
             totalApisEl.textContent  = resultados.length;
             onlineApisEl.textContent  = online;
-            offlineApisEl.textContent = offline;
+            offlineApisEl.textContent = resultados.length - online;
 
-            // Hora
-            const ahora = new Date();
-            lastUpdateEl.textContent = ahora.toLocaleTimeString('es-AR', {
+            lastUpdateEl.textContent = new Date().toLocaleTimeString('es-AR', {
                 hour: '2-digit', minute: '2-digit', second: '2-digit'
             });
-
         } catch (err) {
-            console.error('[DólarCTD] Error al verificar APIs:', err);
             container.innerHTML = `
                 <div class="loading-state">
                     <i class="fas fa-triangle-exclamation" style="color:var(--negative);animation:none"></i>
@@ -176,9 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* ── Inicializar ── */
     refreshBtn.addEventListener('click', verificarTodas);
     verificarTodas();
-    // Auto-refresh cada 5 minutos
     setInterval(verificarTodas, 5 * 60 * 1000);
 });

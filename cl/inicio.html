@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DólarCTD Chile — Cotización del Dólar en Pesos Chilenos (CLP) en tiempo real</title>
+    <meta name="description" content="Cotización del dólar, euro, peso argentino y otras monedas en Chile (CLP) en tiempo real. Con calculadora integrada. Actualización automática cada minuto.">
+    <meta name="keywords" content="dolar chile hoy, dolar en pesos chilenos, tipo de cambio chile, euro clp, dolar clp">
+    <meta name="author" content="FabriCTD">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dolarctd.fabrictd.com/cl/">
+    <meta property="og:url" content="https://dolarctd.fabrictd.com/cl/">
+    <meta property="og:title" content="DólarCTD Chile — Cotización del Dólar en CLP">
+    <meta property="og:description" content="Cotizaciones del dólar y otras monedas en Chile. Actualización automática cada minuto.">
+    <meta property="og:image" content="https://dolarctd.fabrictd.com/logo/logo.png">
+    <meta property="og:locale" content="es_CL">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="header-logo" style="text-decoration:none">
+                    <div>
+                        <div class="header-title">Dólar<span>CTD</span></div>
+                        <p class="header-subtitle">Chile · Peso Chileno (CLP)</p>
+                    </div>
+                </a>
+                <nav class="header-links">
+                    <a href="../index.html" class="dev-link"><i class="fas fa-home"></i> Inicio</a>
+                    <div class="country-dropdown">
+                        <button class="country-dropdown-btn" id="country-dropdown-toggle" aria-label="Cambiar país">
+                            <img src="https://flagcdn.com/w40/cl.png" alt="Chile">
+                            <span>Chile</span>
+                            <i class="fas fa-chevron-down" style="font-size:0.65rem"></i>
+                        </button>
+                        <div class="country-dropdown-menu" id="country-dropdown-menu">
+                            <a href="../ar/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/ar.png" alt="Argentina"> Argentina</a>
+                            <a href="../br/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/br.png" alt="Brasil"> Brasil</a>
+                            <a href="../cl/inicio.html" class="country-dropdown-item active"><img src="https://flagcdn.com/w40/cl.png" alt="Chile"> Chile</a>
+                            <a href="../uy/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/uy.png" alt="Uruguay"> Uruguay</a>
+                            <a href="../ve/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/ve.png" alt="Venezuela"> Venezuela</a>
+                        </div>
+                    </div>
+                    <a href="../ar/contacto.html" class="dev-link"><i class="fas fa-envelope"></i> Contacto</a>
+                    <a href="../estados-apis.html" class="dev-link"><i class="fas fa-circle-nodes"></i> APIs</a>
+                    <a href="https://store.steampowered.com/search/?supportedlang=latam&specials=1&ndl=1" class="steam-btn" target="_blank" rel="noopener"><i class="fab fa-steam"></i> Ofertas Steam</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="calculation-section">
+            <div class="input-container">
+                <div class="input-group">
+                    <i class="fas fa-dollar-sign input-icon"></i>
+                    <input type="number" id="currency-input" placeholder="Ingresa USD" step="0.01" min="0">
+                </div>
+                <button id="calculate-all-btn" class="calculate-btn">
+                    <i class="fas fa-calculator"></i> Calcular en todas
+                </button>
+            </div>
+            <p class="input-description">Ingresa un monto en dólares para calcular su equivalente en CLP en todas las cotizaciones</p>
+        </section>
+        <div class="update-container">
+            <div class="update-text">
+                <i class="fas fa-circle" style="color:var(--positive);font-size:0.55rem;animation:pulse-dot 2s infinite"></i>
+                <span id="update-text">Cargando cotizaciones...</span>
+            </div>
+            <div class="update-bar-wrapper"><div id="update-bar" class="update-bar"></div></div>
+        </div>
+        <section class="card-section">
+            <div class="section-header">
+                <h2 class="section-title">Cotizaciones en Chile</h2>
+                <p class="section-description">Dólar, Euro y otras monedas en Pesos Chilenos (CLP)</p>
+            </div>
+            <div class="cards-grid" id="general-cards"></div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-disclaimer">
+                <strong>⚠ Aviso Legal:</strong> La información de cotizaciones mostrada en DólarCTD proviene de fuentes públicas y se ofrece únicamente con fines informativos y orientativos. No constituye asesoramiento financiero. <strong>DólarCTD no está afiliado con Steam ni ninguna plataforma de entretenimiento.</strong>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="footer-brand-name">DólarCTD</span>
+                    <p class="footer-tagline" style="margin-top:0.5rem">Cotizaciones del dólar y otras monedas en tiempo real. Gratis, sin publicidad.</p>
+                    <div class="footer-social" style="margin-top:0.75rem">
+                        <a href="https://github.com/FabriCTD" class="footer-social-link" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.youtube.com/@FabriCTD" class="footer-social-link youtube" target="_blank" rel="noopener" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-col-title">Países</p>
+                    <ul class="footer-links-list">
+                        <li><a href="../index.html" class="footer-link"><i class="fas fa-globe"></i> Todos los países</a></li>
+                        <li><a href="../ar/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Argentina (ARS)</a></li>
+                        <li><a href="../br/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Brasil (BRL)</a></li>
+                        <li><a href="../uy/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Uruguay (UYU)</a></li>
+                        <li><a href="../ve/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Venezuela (VES)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-col-title">Recursos</p>
+                    <ul class="footer-links-list">
+                        <li><a href="../estados-apis.html" class="footer-link"><i class="fas fa-circle-nodes"></i> Estado de APIs</a></li>
+                        <li><a href="../ar/contacto.html" class="footer-link"><i class="fas fa-envelope"></i> Contacto</a></li>
+                        <li><a href="https://github.com/FabriCTD/DolarCTD" class="footer-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repositorio</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DólarCTD · <a href="https://github.com/FabriCTD" target="_blank" rel="noopener">FabriCTD</a></p>
+                <p>Fuente: <a href="https://cl.dolarapi.com" target="_blank" rel="noopener">DolarAPI Chile</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="calc-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Calculadora</h3>
+                <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="calc-section">
+                    <h4>CLP a <span id="currency-name">Moneda</span></h4>
+                    <div class="calc-input-group">
+                        <input type="number" id="local-input" placeholder="Ingresa CLP" step="1" min="0">
+                        <button class="calc-btn" id="btn-local-to-foreign">Calcular</button>
+                    </div>
+                    <div class="calc-result" id="result-local-to-foreign">
+                        <span class="result-label">Resultado</span>
+                        <span class="result-value">—</span>
+                    </div>
+                </div>
+                <div class="calc-section">
+                    <h4><span id="currency-name-2">Moneda</span> a CLP</h4>
+                    <div class="calc-input-group">
+                        <input type="number" id="foreign-input" placeholder="Ingresa monto" step="0.01" min="0">
+                        <button class="calc-btn" id="btn-foreign-to-local">Calcular</button>
+                    </div>
+                    <div class="calc-result" id="result-foreign-to-local">
+                        <span class="result-label">Resultado</span>
+                        <span class="result-value">—</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close-footer-btn" id="modal-close-footer-btn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="js/script.js"></script>
+    <style>@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }</style>
+</body>
+</html>

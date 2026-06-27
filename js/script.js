@@ -1,10 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Animación de entrada para las tarjetas de países
-    const countryCards = document.querySelectorAll('.country-card');
-    countryCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
+// Script del root — sin lógica especial, app.js ya está cargado
+document.addEventListener('DOMContentLoaded', () => {
+    // Resaltar país activo si se volvió desde una subpágina
+    const params = new URLSearchParams(window.location.search);
+    const pais = params.get('pais');
+    if (pais) {
+        const card = document.getElementById(`card-${pais}`);
+        if (card) {
+            card.style.borderColor = 'var(--primary)';
+            card.style.boxShadow = 'var(--shadow-glow)';
+        }
+    }
 });

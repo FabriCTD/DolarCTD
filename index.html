@@ -3,93 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoDólAR - Selector de País</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <!-- SEO Primario -->
+    <title>DólarCTD — Cotizaciones del dólar en tiempo real | Argentina, Chile, Uruguay, Brasil y Venezuela</title>
+    <meta name="description" content="Consultá las cotizaciones del dólar, euro y otras monedas en tiempo real para Argentina, Chile, Uruguay, Brasil y Venezuela. Calculadora integrada, actualizaciones automáticas cada minuto. Gratis y sin registros.">
+    <meta name="keywords" content="dolar hoy, cotizacion dolar, dolar blue, dolar oficial, tipo de cambio, dolar argentina, dolar chile, dolar uruguay, dolar venezuela, dolar brasil">
+    <meta name="author" content="FabriCTD">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dolarctd.fabrictd.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dolarctd.fabrictd.com/">
+    <meta property="og:title" content="DólarCTD — Cotizaciones del dólar en tiempo real">
+    <meta property="og:description" content="Cotizaciones del dólar y otras monedas en tiempo real. Argentina, Chile, Uruguay, Brasil y Venezuela. Con calculadora integrada y actualización automática.">
+    <meta property="og:image" content="https://dolarctd.fabrictd.com/logo/logo.png">
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="DólarCTD">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DólarCTD — Cotizaciones del dólar en tiempo real">
+    <meta name="twitter:description" content="Cotizaciones del dólar en tiempo real para Sudamérica. Gratis y sin registros.">
+    <meta name="twitter:image" content="https://dolarctd.fabrictd.com/logo/logo.png">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- Fuentes & Íconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Fondo animado -->
+
     <div class="animated-bg"></div>
-    
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="container">
             <div class="header-content">
                 <div class="header-logo">
-                    <img src="logo/logo.png" alt="TodoDólar Logo" class="logo-img">
                     <div>
-                        <h1 class="header-title">TodoDólAR</h1>
-                        <p class="header-subtitle">Selecciona tu país para ver las cotizaciones</p>
-                        <a href="estados-apis/index.html" class="dev-link">Ver estado de las APIs de TodoDólAR</a>
+                        <h1 class="header-title">Dólar<span>CTD</span></h1>
+                        <p class="header-subtitle">Cotizaciones en tiempo real</p>
                     </div>
                 </div>
+                <nav class="header-links">
+                    <a href="estados-apis.html" class="dev-link">
+                        <i class="fas fa-circle-nodes"></i> Estado de APIs
+                    </a>
+                    <a href="ar/contacto.html" class="dev-link">
+                        <i class="fas fa-envelope"></i> Contacto
+                    </a>
+                    <a href="https://github.com/FabriCTD/DolarCTD" class="dev-link" target="_blank" rel="noopener">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </nav>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- Selector de países -->
-        <section class="country-selector">
-            <h2 class="section-title">Selecciona tu país</h2>
-            <div class="countries-grid">
-                <a href="ar/inicio/index.html" target="_blank" class="country-card">
-                    <div class="country-flag">
-                        <img src="https://flagcdn.com/w320/ar.png" alt="Argentina">
-                    </div>
-                    <h3>Argentina</h3>
-                    <p>ARS - Peso Argentino</p>
-                </a>
-                <a href="br/inicio/index.html" target="_blank" class="country-card">
-                    <div class="country-flag">
-                        <img src="https://flagcdn.com/w320/br.png" alt="Brasil">
-                    </div>
-                    <h3>Brasil</h3>
-                    <p>BRL - Real Brasilero</p>
-                </a>
-                <a href="cl/inicio/index.html" target="_blank" class="country-card">
-                    <div class="country-flag">
-                        <img src="https://flagcdn.com/w320/cl.png" alt="Chile">
-                    </div>
-                    <h3>Chile</h3>
-                    <p>CLP - Peso Chileno</p>
-                </a>
-                <a href="uy/inicio/index.html" target="_blank" class="country-card">
-                    <div class="country-flag">
-                        <img src="https://flagcdn.com/w320/uy.png" alt="Uruguay">
-                    </div>
-                    <h3>Uruguay</h3>
-                    <p>UYU - Peso Uruguayo</p>
-                </a>
-                <a href="ve/inicio/index.html" target="_blank" class="country-card">
-                    <div class="country-flag">
-                        <img src="https://flagcdn.com/w320/ve.png" alt="Venezuela">
-                    </div>
-                    <h3>Venezuela</h3>
-                    <p>VES - Bolívar Venezolano</p>
-                </a>
+    <!-- ══ HERO ══ -->
+    <div class="container">
+        <section class="hero-section">
+            <div class="hero-badge">
+                <i class="fas fa-bolt"></i>
+                Actualización automática cada minuto
             </div>
+            <h2 class="hero-title">
+                <span class="brand">Dólar</span><span class="gold">CTD</span>
+            </h2>
+            <p class="hero-description">
+                Cotizaciones del dólar y otras monedas en tiempo real para Argentina, Chile, Uruguay, Brasil y Venezuela. Con calculadora integrada, sin publicidad.
+            </p>
+
+            <!-- Selector de país -->
+            <section class="country-selector" aria-label="Selección de país">
+                <div class="countries-grid">
+
+                    <a href="ar/inicio.html" class="country-card" id="card-ar">
+                        <div class="country-flag">
+                            <img src="https://flagcdn.com/w160/ar.png" alt="Bandera Argentina" loading="lazy">
+                        </div>
+                        <h3>Argentina</h3>
+                        <p>ARS · Peso Argentino</p>
+                    </a>
+
+                    <a href="br/inicio.html" class="country-card" id="card-br">
+                        <div class="country-flag">
+                            <img src="https://flagcdn.com/w160/br.png" alt="Bandera Brasil" loading="lazy">
+                        </div>
+                        <h3>Brasil</h3>
+                        <p>BRL · Real Brasileño</p>
+                    </a>
+
+                    <a href="cl/inicio.html" class="country-card" id="card-cl">
+                        <div class="country-flag">
+                            <img src="https://flagcdn.com/w160/cl.png" alt="Bandera Chile" loading="lazy">
+                        </div>
+                        <h3>Chile</h3>
+                        <p>CLP · Peso Chileno</p>
+                    </a>
+
+                    <a href="uy/inicio.html" class="country-card" id="card-uy">
+                        <div class="country-flag">
+                            <img src="https://flagcdn.com/w160/uy.png" alt="Bandera Uruguay" loading="lazy">
+                        </div>
+                        <h3>Uruguay</h3>
+                        <p>UYU · Peso Uruguayo</p>
+                    </a>
+
+                    <a href="ve/inicio.html" class="country-card" id="card-ve">
+                        <div class="country-flag">
+                            <img src="https://flagcdn.com/w160/ve.png" alt="Bandera Venezuela" loading="lazy">
+                        </div>
+                        <h3>Venezuela</h3>
+                        <p>VES · Bolívar Soberano</p>
+                    </a>
+
+                </div>
+            </section>
         </section>
 
-        <!-- Footer -->
+        <!-- ══ FOOTER ══ -->
         <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="logo/logo.png" alt="TodoDólAR Logo" class="footer-logo-img">
-                    <span class="footer-title">TodoDólAR</span>
-                    <p>La información de cotizaciones, índices y valores mostrada en TodoDólAR se ofrece únicamente con fines informativos y orientativos.</p>
-
-                    <p>No debe considerarse en ningún caso como una sugerencia o consejo para realizar operaciones de compra o venta.</p>
-
-                    <p>TodoDólAR no esta afiliado con Steam, Netflix ni ningun otra plataforma de entretenimiento.</p>
+            <div class="footer-disclaimer">
+                <strong>⚠ Aviso Legal:</strong> La información de cotizaciones mostrada en DólarCTD proviene de fuentes públicas y se ofrece
+                únicamente con fines informativos y orientativos. No constituye asesoramiento financiero, ni debe interpretarse como una
+                recomendación para realizar operaciones de compra, venta o inversión de ningún tipo. DólarCTD no garantiza la exactitud,
+                completitud ni actualidad de los datos. <strong>DólarCTD no está afiliado con Steam, Netflix ni ninguna plataforma de
+                entretenimiento mencionada.</strong>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="footer-brand-name">DólarCTD</span>
+                    </div>
+                    <p class="footer-tagline">Cotizaciones del dólar y otras monedas en tiempo real para Sudamérica. Gratuito, sin publicidad, sin registros.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/FabriCTD" class="footer-social-link" target="_blank" rel="noopener" title="GitHub: FabriCTD" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@FabriCTD" class="footer-social-link youtube" target="_blank" rel="noopener" title="YouTube: @FabriCTD" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://store.steampowered.com/search/?developer=FabriCTD" class="footer-social-link steam" target="_blank" rel="noopener" title="Steam: FabriCTD" aria-label="Steam">
+                            <i class="fab fa-steam"></i>
+                        </a>
+                    </div>
                 </div>
-                <br>
+                <div>
+                    <p class="footer-col-title">Países</p>
+                    <ul class="footer-links-list">
+                        <li><a href="ar/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Argentina (ARS)</a></li>
+                        <li><a href="br/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Brasil (BRL)</a></li>
+                        <li><a href="cl/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Chile (CLP)</a></li>
+                        <li><a href="uy/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Uruguay (UYU)</a></li>
+                        <li><a href="ve/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Venezuela (VES)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-col-title">Recursos</p>
+                    <ul class="footer-links-list">
+                        <li><a href="estados-apis.html" class="footer-link"><i class="fas fa-circle-nodes"></i> Estado de APIs</a></li>
+                        <li><a href="ar/contacto.html" class="footer-link"><i class="fas fa-envelope"></i> Contacto</a></li>
+                        <li><a href="https://github.com/FabriCTD/DolarCTD" class="footer-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repositorio</a></li>
+                        <li><a href="https://dolarapi.com/docs/" class="footer-link" target="_blank" rel="noopener"><i class="fas fa-code"></i> DolarAPI</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 TodoDólAR - Todos los derechos reservados丨API Utilizada: <a href="https://dolarapi.com/docs/" target="_blank">DolarAPI</a>丨<a href="https://github.com/FabriDevelope/todod-lar-ar" target="_blank">Repositorio</a> publico de TodoDólAR</p>
+                <p>&copy; 2025 DólarCTD · Desarrollado con <i class="fas fa-heart" style="color:var(--negative)"></i> por
+                    <a href="https://github.com/FabriCTD" target="_blank" rel="noopener">FabriCTD</a>
+                </p>
+                <p>API: <a href="https://dolarapi.com/docs/" target="_blank" rel="noopener">DolarAPI</a> ·
+                   <a href="https://github.com/FabriCTD/DolarCTD" target="_blank" rel="noopener">Código en GitHub</a>
+                </p>
             </div>
         </footer>
     </div>
 
+    <script src="js/app.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /shared/
+Disallow: /ar/inicio/
+Disallow: /br/inicio/
+Disallow: /cl/inicio/
+Disallow: /uy/inicio/
+Disallow: /ve/inicio/
+Disallow: /estados-apis/
+
+Sitemap: https://dolarctd.fabrictd.com/sitemap.xml

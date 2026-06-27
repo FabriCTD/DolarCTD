@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto — DólarCTD</title>
+    <meta name="description" content="Contacto con el equipo de DólarCTD. Sugerencias, reportar bugs o simplemente saludar. GitHub: FabriCTD/DolarCTD, YouTube: @FabriCTD.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dolarctd.fabrictd.com/ar/contacto.html">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="header-logo" style="text-decoration:none">
+                    <div>
+                        <div class="header-title">Dólar<span>CTD</span></div>
+                        <p class="header-subtitle">Contacto</p>
+                    </div>
+                </a>
+                <nav class="header-links">
+                    <a href="../index.html" class="dev-link"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="inicio.html" class="dev-link"><i class="fas fa-arrow-left"></i> Argentina</a>
+                    <a href="../estados-apis.html" class="dev-link"><i class="fas fa-circle-nodes"></i> Estado APIs</a>
+                    <a href="https://github.com/FabriCTD/DolarCTD" class="dev-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="contact-section">
+            <div style="margin-bottom:2rem">
+                <h2 class="section-title" style="font-size:1.75rem;padding-left:0">Contacto</h2>
+                <p style="color:var(--text-muted);margin-top:0.5rem">¿Tenés alguna consulta, sugerencia o encontraste un bug? ¡Escribinos!</p>
+            </div>
+            <div class="contact-grid">
+                <!-- Info de contacto -->
+                <div class="contact-info-panel">
+                    <h3 class="contact-title">Información del Desarrollador</h3>
+                    <p class="contact-description">
+                        DólarCTD es un proyecto personal creado y mantenido por <strong>FabriCTD</strong>.
+                        Si tenés alguna sugerencia, encontraste un bug, o simplemente querés saludar, no dudes en escribir.
+                    </p>
+
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email: <a href="mailto:dolarctd@fabrictd.com">dolarctd@fabrictd.com</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Web: <a href="https://dolarctd.fabrictd.com" target="_blank" rel="noopener">dolarctd.fabrictd.com</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>¿Horario de atención? No existe, jajaja 😄</span>
+                        </div>
+                    </div>
+
+                    <p style="font-size:0.8rem;color:var(--text-dim);margin-top:1.25rem">Redes sociales</p>
+                    <div class="social-links" style="margin-top:0.5rem">
+                        <a href="https://github.com/FabriCTD" class="social-btn github" target="_blank" rel="noopener">
+                            <i class="fab fa-github"></i> FabriCTD
+                        </a>
+                        <a href="https://www.youtube.com/@FabriCTD" class="social-btn youtube" target="_blank" rel="noopener">
+                            <i class="fab fa-youtube"></i> @FabriCTD
+                        </a>
+                        <a href="https://store.steampowered.com/search/?developer=FabriCTD" class="social-btn steam" target="_blank" rel="noopener">
+                            <i class="fab fa-steam"></i> FabriCTD
+                        </a>
+                        <a href="https://github.com/FabriCTD/DolarCTD" class="social-btn github" target="_blank" rel="noopener" style="background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.2);color:var(--primary-light)">
+                            <i class="fab fa-github"></i> Proyecto
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Formulario -->
+                <div class="contact-form-panel">
+                    <h3 class="form-title">Envianos tu mensaje</h3>
+                    <form class="contact-form" id="contact-form" action="mailto:dolarctd@fabrictd.com" method="get" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="contact-name">Nombre</label>
+                            <input type="text" id="contact-name" name="name" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Tu Email</label>
+                            <input type="email" id="contact-email" name="email" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Asunto</label>
+                            <input type="text" id="contact-subject" name="subject" placeholder="Bug, sugerencia, consulta..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Mensaje</label>
+                            <textarea id="contact-message" name="body" rows="5" placeholder="Escribí tu mensaje acá..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Enviar mensaje
+                        </button>
+                    </form>
+                    <p style="font-size:0.75rem;color:var(--text-dim);margin-top:0.875rem;text-align:center">
+                        O escribí directamente a <a href="mailto:dolarctd@fabrictd.com" style="color:var(--primary-light)">dolarctd@fabrictd.com</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-disclaimer">
+                <strong>⚠ Aviso Legal:</strong> La información de cotizaciones mostrada en DólarCTD proviene de fuentes públicas y se ofrece únicamente con fines informativos y orientativos. No constituye asesoramiento financiero.
+            </div>
+            <div class="footer-bottom" style="border-top:1px solid var(--border-card);padding-top:1.25rem;margin-top:1.5rem">
+                <p>&copy; 2025 DólarCTD · Desarrollado por <a href="https://github.com/FabriCTD" target="_blank" rel="noopener">FabriCTD</a></p>
+                <p><a href="../index.html">Inicio</a> · <a href="../estados-apis.html">Estado APIs</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>DólarCTD Argentina — Dólar Blue, Oficial, MEP, CCL y más | Cotizaciones en tiempo real</title>
+    <meta name="description" content="Cotizaciones del Dólar Blue, Oficial, MEP, CCL, Cripto, Tarjeta y Mayorista en Argentina al instante. Calculadora de ARS y cotizaciones de Steam, Netflix. Actualización cada minuto.">
+    <meta name="keywords" content="dolar blue hoy, dolar oficial argentina, dolar mep, dolar ccl, tipo de cambio argentina, dolar tarjeta, dolar cripto, cotizacion euro argentina">
+    <meta name="author" content="FabriCTD">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dolarctd.fabrictd.com/ar/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dolarctd.fabrictd.com/ar/">
+    <meta property="og:title" content="DólarCTD Argentina — Cotizaciones del dólar en tiempo real">
+    <meta property="og:description" content="Dólar Blue, Oficial, MEP, CCL, Cripto y más en Argentina. Con calculadora integrada.">
+    <meta property="og:image" content="https://dolarctd.fabrictd.com/logo/logo.png">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "DólarCTD Argentina",
+        "description": "Cotizaciones del dólar en tiempo real para Argentina",
+        "url": "https://dolarctd.fabrictd.com/ar/",
+        "author": { "@type": "Person", "name": "FabriCTD", "url": "https://github.com/FabriCTD" },
+        "applicationCategory": "FinanceApplication",
+        "inLanguage": "es-AR"
+    }
+    </script>
+
+    <!-- Fuentes & Íconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <div class="animated-bg"></div>
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="header-logo" style="text-decoration:none">
+                    <div>
+                        <div class="header-title">Dólar<span>CTD</span></div>
+                        <p class="header-subtitle">Argentina · Peso Argentino (ARS)</p>
+                    </div>
+                </a>
+                <nav class="header-links">
+                    <a href="../index.html" class="dev-link"><i class="fas fa-home"></i> Inicio</a>
+
+                    <!-- Selector de país -->
+                    <div class="country-dropdown">
+                        <button class="country-dropdown-btn" id="country-dropdown-toggle" aria-label="Cambiar país">
+                            <img src="https://flagcdn.com/w40/ar.png" alt="Argentina">
+                            <span>Argentina</span>
+                            <i class="fas fa-chevron-down" style="font-size:0.65rem"></i>
+                        </button>
+                        <div class="country-dropdown-menu" id="country-dropdown-menu">
+                            <a href="../ar/inicio.html" class="country-dropdown-item active"><img src="https://flagcdn.com/w40/ar.png" alt="Argentina"> Argentina</a>
+                            <a href="../br/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/br.png" alt="Brasil"> Brasil</a>
+                            <a href="../cl/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/cl.png" alt="Chile"> Chile</a>
+                            <a href="../uy/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/uy.png" alt="Uruguay"> Uruguay</a>
+                            <a href="../ve/inicio.html" class="country-dropdown-item"><img src="https://flagcdn.com/w40/ve.png" alt="Venezuela"> Venezuela</a>
+                        </div>
+                    </div>
+
+                    <a href="contacto.html" class="dev-link"><i class="fas fa-envelope"></i> Contacto</a>
+                    <a href="../estados-apis.html" class="dev-link"><i class="fas fa-circle-nodes"></i> APIs</a>
+                    <a href="https://store.steampowered.com/search/?supportedlang=latam&specials=1&ndl=1" class="steam-btn" target="_blank" rel="noopener"><i class="fab fa-steam"></i> Ofertas Steam</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ══ CALCULADORA RÁPIDA ══ -->
+        <section class="calculation-section" aria-label="Calculadora rápida">
+            <div class="input-container">
+                <div class="input-group">
+                    <i class="fas fa-dollar-sign input-icon"></i>
+                    <input type="number" id="currency-input" placeholder="Ingresá USD o EUR" step="0.01" min="0" aria-label="Monto en dólares o euros">
+                </div>
+                <button id="calculate-all-btn" class="calculate-btn">
+                    <i class="fas fa-calculator"></i> Calcular en todas
+                </button>
+            </div>
+            <p class="input-description">Ingresá un monto para calcular su equivalente en ARS en todas las cotizaciones</p>
+        </section>
+
+        <!-- Barra de actualización -->
+        <div class="update-container">
+            <div class="update-text">
+                <i class="fas fa-circle" style="color:var(--positive);font-size:0.55rem;animation:pulse-dot 2s infinite"></i>
+                <span id="update-text">Cargando cotizaciones...</span>
+            </div>
+            <div class="update-bar-wrapper">
+                <div id="update-bar" class="update-bar"></div>
+            </div>
+        </div>
+
+        <!-- ══ ENTRETENIMIENTO ══ -->
+        <section class="card-section" aria-label="Dólar entretenimiento">
+            <div class="section-header">
+                <h2 class="section-title">Entretenimiento</h2>
+                <p class="section-description">Steam, Netflix y servicios digitales en ARS</p>
+            </div>
+            <div class="cards-grid" id="steam-cards"></div>
+        </section>
+
+        <!-- ══ DÓLAR ══ -->
+        <section class="card-section" aria-label="Tipos de dólar en Argentina">
+            <div class="section-header">
+                <h2 class="section-title">Tipos de Dólar</h2>
+                <p class="section-description">Todas las cotizaciones del dólar en Argentina</p>
+            </div>
+            <div class="cards-grid" id="general-cards"></div>
+        </section>
+
+        <!-- ══ OTRAS MONEDAS ══ -->
+        <section class="card-section" aria-label="Otras monedas en Argentina">
+            <div class="section-header">
+                <h2 class="section-title">Otras Monedas</h2>
+                <p class="section-description">Euro, Real, Peso Chileno y más en ARS</p>
+            </div>
+            <div class="cards-grid" id="euro-cards"></div>
+        </section>
+
+        <!-- ══ FOOTER ══ -->
+        <footer class="footer">
+            <div class="footer-disclaimer">
+                <strong>⚠ Aviso Legal:</strong> La información de cotizaciones mostrada en DólarCTD proviene de fuentes públicas (DolarAPI) y se ofrece
+                únicamente con fines informativos y orientativos. No constituye asesoramiento financiero, ni debe interpretarse como recomendación
+                para realizar operaciones de compra, venta o inversión. DólarCTD no garantiza la exactitud ni la actualidad de los datos.
+                Los cálculos de impuestos (IVA, retenciones) son aproximados y pueden cambiar según la normativa vigente.
+                <strong>DólarCTD no está afiliado con Steam, Netflix ni ninguna plataforma de entretenimiento mencionada.</strong>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="footer-brand-name">DólarCTD</span>
+                    </div>
+                    <p class="footer-tagline">Cotizaciones del dólar y otras monedas en tiempo real. Gratis, sin publicidad, sin registros.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/FabriCTD" class="footer-social-link" target="_blank" rel="noopener" title="GitHub: FabriCTD"><i class="fab fa-github"></i></a>
+                        <a href="https://www.youtube.com/@FabriCTD" class="footer-social-link youtube" target="_blank" rel="noopener" title="YouTube: @FabriCTD"><i class="fab fa-youtube"></i></a>
+                        <a href="https://store.steampowered.com/search/?supportedlang=latam&specials=1&ndl=1" class="footer-social-link steam" target="_blank" rel="noopener" title="Steam: FabriCTD"><i class="fab fa-steam"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-col-title">Países</p>
+                    <ul class="footer-links-list">
+                        <li><a href="../index.html" class="footer-link"><i class="fas fa-globe"></i> Todos los países</a></li>
+                        <li><a href="../br/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Brasil (BRL)</a></li>
+                        <li><a href="../cl/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Chile (CLP)</a></li>
+                        <li><a href="../uy/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Uruguay (UYU)</a></li>
+                        <li><a href="../ve/inicio.html" class="footer-link"><i class="fas fa-chevron-right"></i> Venezuela (VES)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-col-title">Recursos</p>
+                    <ul class="footer-links-list">
+                        <li><a href="../estados-apis.html" class="footer-link"><i class="fas fa-circle-nodes"></i> Estado de APIs</a></li>
+                        <li><a href="contacto.html" class="footer-link"><i class="fas fa-envelope"></i> Contacto</a></li>
+                        <li><a href="https://github.com/FabriCTD/DolarCTD" class="footer-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Código en GitHub</a></li>
+                        <li><a href="https://dolarapi.com/docs/argentina/" class="footer-link" target="_blank" rel="noopener"><i class="fas fa-code"></i> DolarAPI (AR)</a></li>
+                        <li><a href="https://store.steampowered.com/search/?supportedlang=latam&specials=1&ndl=1" class="footer-link" target="_blank" rel="noopener"><i class="fab fa-steam"></i> Ofertas en Steam</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DólarCTD · Desarrollado por <a href="https://github.com/FabriCTD" target="_blank" rel="noopener">FabriCTD</a></p>
+                <p>Fuente de datos: <a href="https://dolarapi.com/docs/argentina/" target="_blank" rel="noopener">DolarAPI Argentina</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ══ MODAL CALCULADORA ══ -->
+    <div id="calc-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Calculadora</h3>
+                <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar calculadora">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="calc-section">
+                    <h4>ARS a <span id="currency-name">Moneda</span></h4>
+                    <div class="calc-input-group">
+                        <input type="number" id="local-input" placeholder="Ingresá ARS" step="0.01" min="0">
+                        <button class="calc-btn" id="btn-local-to-foreign">Calcular</button>
+                    </div>
+                    <div class="calc-result" id="result-local-to-foreign">
+                        <span class="result-label">Resultado</span>
+                        <span class="result-value">—</span>
+                    </div>
+                </div>
+                <div class="calc-section">
+                    <h4><span id="currency-name-2">Moneda</span> a ARS</h4>
+                    <div class="calc-input-group">
+                        <input type="number" id="foreign-input" placeholder="Ingresá monto" step="0.01" min="0">
+                        <button class="calc-btn" id="btn-foreign-to-local">Calcular</button>
+                    </div>
+                    <div class="calc-result" id="result-foreign-to-local">
+                        <span class="result-label">Resultado</span>
+                        <span class="result-value">—</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close-footer-btn" id="modal-close-footer-btn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="js/script.js"></script>
+    <style>
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</body>
+</html>
