@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Primario -->
+    <title>API Divisas Gratis v2 | Referencia Completa — DólarCTD</title>
+    <meta name="description" content="Documentación avanzada de la API de divisas de DólarCTD. Aprende a obtener tasas de cambio en tiempo real, datos históricos y series temporales para tus proyectos.">
+    <meta name="keywords" content="API divisas gratis, API tipo de cambio v2, documentacion api divisas, json divisas, FabriCTD">
+    <meta name="author" content="FabriCTD">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dolarctd.fabrictd.com/api/v2/docs.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="apple-touch-icon" href="../../favicon.png">
+
+    <!-- Fuentes & Íconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+
+    <div class="animated-bg"></div>
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-logo">
+                    <div>
+                        <h1 class="header-title">Dólar<span>CTD</span></h1>
+                        <p class="header-subtitle">Documentación API v2</p>
+                    </div>
+                </div>
+                <nav class="header-links">
+                    <a href="../../divisas/index.html" class="dev-link" style="color: var(--accent); border-color: var(--accent-glow);">
+                        <i class="fas fa-arrow-left"></i> Volver al Conversor
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══ MAIN DOCS ══ -->
+    <div class="container docs-wrapper">
+        
+        <!-- Sidebar -->
+        <aside class="docs-sidebar fade-in-up delay-1">
+            <h3>Introducción</h3>
+            <ul>
+                <li><a href="#intro" class="active">¿Qué es esta API?</a></li>
+                <li><a href="#auth">Arquitectura & CORS</a></li>
+            </ul>
+            <h3>Endpoints Principales</h3>
+            <ul>
+                <li><a href="#rates">Tasas Actuales (Latest)</a></li>
+                <li><a href="#historical">Tasas Históricas</a></li>
+                <li><a href="#timeseries">Series Temporales</a></li>
+                <li><a href="#currencies">Catálogo de Monedas</a></li>
+            </ul>
+            <h3>Implementación</h3>
+            <ul>
+                <li><a href="#examples">Ejemplos (JS / Python)</a></li>
+                <li><a href="#errors">Manejo de Errores</a></li>
+            </ul>
+            <h3>Playground</h3>
+            <ul>
+                <li><a href="#live">Terminal Interactiva <i class="fas fa-terminal" style="margin-left: 5px; color: var(--accent);"></i></a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <main class="docs-content">
+
+            <section id="intro" class="docs-section fade-in-up delay-2">
+                <h2><i class="fas fa-book-open"></i> Introducción a la API v2</h2>
+                <p>
+                    Bienvenido a la documentación oficial de la <strong>API de Divisas de DólarCTD</strong>. Esta interfaz de programación (API) ha sido diseñada para ser una de las soluciones más rápidas y accesibles para obtener tipos de cambio internacionales. 
+                </p>
+                <p>
+                    Proporciona datos en tiempo real y series históricas que abarcan desde el año 1999 hasta el día de hoy, procesando la información de más de 84 bancos centrales alrededor del globo. Las actualizaciones de mercado se reflejan diariamente alrededor de las 16:00 CET.
+                </p>
+            </section>
+
+            <section id="auth" class="docs-section fade-in-up delay-2">
+                <h2><i class="fas fa-server"></i> Arquitectura Serverless & Autenticación</h2>
+                <p>
+                    Para maximizar la resiliencia y velocidad, nuestra API está impulsada por <strong>Netlify Functions</strong>. Esto significa que DólarCTD actúa como un proxy inverso de altísimo rendimiento conectado a la red principal del BCE (vía Frankfurter).
+                </p>
+                <h3>Ventajas de nuestra infraestructura:</h3>
+                <ul>
+                    <li><strong style="color:var(--primary-light)">Cero Configuración:</strong> No requieres registrarte, ni gestionar API Keys, ni enviar Headers de Autenticación. Es completamente abierta.</li>
+                    <li><strong style="color:var(--primary-light)">CORS Habilitado Nativo:</strong> Las cabeceras <code>Access-Control-Allow-Origin: *</code> están inyectadas a nivel de proxy. Puedes hacer peticiones <code>fetch()</code> o <code>axios()</code> directamente desde el frontend de tu aplicación (React, Vue, Vanilla) sin temor a ser bloqueado por el navegador.</li>
+                    <li><strong style="color:var(--primary-light)">Límites de Uso (Rate Limit):</strong> No hay límites estrictos codificados, pero apelamos al "Fair Use" (Uso Justo). Si planeas hacer cientos de peticiones por segundo, considera implementar caché en tu lado.</li>
+                </ul>
+            </section>
+
+            <section id="rates" class="docs-section fade-in-up delay-3">
+                <h2><i class="fas fa-bolt"></i> Obtener Tasas Actuales</h2>
+                <p>El endpoint <code>/rates</code> (sin parámetro de fecha) devuelve los tipos de cambio más recientes conocidos por el sistema.</p>
+
+                <div class="endpoint-url">
+                    <span class="method-badge">GET</span>
+                    <span class="url-text">
+                        <span class="host">https://dolarctd.fabrictd.com</span><span class="route">/api/v2/rates</span><span class="query">?base=USD&amp;quotes=ARS,EUR</span>
+                    </span>
+                </div>
+
+                <table class="params-table">
+                    <thead>
+                        <tr><th>Parámetro</th><th>Descripción</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="param-name">base</span> <span class="param-opt">Opcional</span></td>
+                            <td>Código ISO 4217 de 3 letras de la moneda base. Si se omite, el sistema usa <code>EUR</code> por defecto.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">quotes</span> <span class="param-opt">Opcional</span></td>
+                            <td>Lista separada por comas de los símbolos de monedas de destino. Ejemplo: <code>ARS,BRL,GBP</code>. Usar esto reduce el tamaño del JSON de respuesta significativamente.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Respuesta Esperada</h3>
+                <pre class="code-block">[
+  {
+    <span class="json-key">"date"</span>: <span class="json-string">"2026-07-17"</span>,
+    <span class="json-key">"base"</span>: <span class="json-string">"USD"</span>,
+    <span class="json-key">"quote"</span>: <span class="json-string">"ARS"</span>,
+    <span class="json-key">"rate"</span>: <span class="json-number">1015.50</span>
+  },
+  {
+    <span class="json-key">"date"</span>: <span class="json-string">"2026-07-17"</span>,
+    <span class="json-key">"base"</span>: <span class="json-string">"USD"</span>,
+    <span class="json-key">"quote"</span>: <span class="json-string">"EUR"</span>,
+    <span class="json-key">"rate"</span>: <span class="json-number">0.9124</span>
+  }
+]</pre>
+            </section>
+
+            <section id="historical" class="docs-section fade-in-up delay-3">
+                <h2><i class="fas fa-history"></i> Tasas Históricas</h2>
+                <p>¿Necesitas saber cuánto valía el Euro o el Real Brasileño hace 5 años? Proporciona el parámetro de fecha en la URL.</p>
+
+                <div class="endpoint-url">
+                    <span class="method-badge">GET</span>
+                    <span class="url-text">
+                        <span class="host">https://dolarctd.fabrictd.com</span><span class="route">/api/v2/rates</span><span class="query">?date=2023-05-10&amp;base=USD</span>
+                    </span>
+                </div>
+
+                <table class="params-table">
+                    <thead>
+                        <tr><th>Parámetro</th><th>Descripción</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="param-name">date</span> <span class="param-req">Requerido</span></td>
+                            <td>Fecha exacta a consultar, estrictamente en formato ISO <code class="inline">YYYY-MM-DD</code>. Si la fecha cae en fin de semana, la API buscará el último día hábil anterior.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">base</span> <span class="param-opt">Opcional</span></td>
+                            <td>Moneda base de cálculo.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="timeseries" class="docs-section fade-in-up delay-4">
+                <h2><i class="fas fa-chart-area"></i> Series Temporales (Time-Series)</h2>
+                <p>El endpoint más potente para graficar. Permite solicitar la evolución de una o varias monedas a lo largo de un periodo de tiempo. Nuestro propio gráfico interactivo en el conversor funciona gracias a este método.</p>
+
+                <div class="endpoint-url">
+                    <span class="method-badge">GET</span>
+                    <span class="url-text">
+                        <span class="host">https://dolarctd.fabrictd.com</span><span class="route">/api/v2/rates</span><span class="query">?from=2024-01-01&amp;to=2024-01-05&amp;base=USD&amp;quotes=EUR</span>
+                    </span>
+                </div>
+
+                <table class="params-table">
+                    <thead>
+                        <tr><th>Parámetro</th><th>Descripción</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="param-name">from</span> <span class="param-req">Requerido</span></td>
+                            <td>Fecha de inicio de la serie temporal (<code class="inline">YYYY-MM-DD</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">to</span> <span class="param-opt">Opcional</span></td>
+                            <td>Fecha de finalización. Si se omite, se asume el día actual.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">group</span> <span class="param-opt">Opcional</span></td>
+                            <td>Técnica de compresión (Downsampling) para evitar payloads masivos. Valores aceptados: <code class="inline">week</code> (promedio semanal) o <code class="inline">month</code> (promedio mensual). Ideal si consultas rangos de 5 o 10 años.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="currencies" class="docs-section fade-in-up delay-4">
+                <h2><i class="fas fa-list"></i> Catálogo de Monedas</h2>
+                <p>Obtén el diccionario completo de las monedas soportadas, mapeando los códigos ISO de 3 letras con sus nombres descriptivos.</p>
+
+                <div class="endpoint-url">
+                    <span class="method-badge">GET</span>
+                    <span class="url-text">
+                        <span class="host">https://dolarctd.fabrictd.com</span><span class="route">/api/v2/currencies</span>
+                    </span>
+                </div>
+            </section>
+
+            <section id="examples" class="docs-section fade-in-up delay-4">
+                <h2><i class="fas fa-code"></i> Ejemplos de Implementación</h2>
+                <p>Aquí tienes ejemplos listos para copiar y pegar (Copy-Paste) en los lenguajes más populares.</p>
+
+                <h3>JavaScript (Node.js / Browser Fetch)</h3>
+                <pre class="code-block">
+<span class="code-comment">// Función asíncrona para obtener tasas del USD al Peso Argentino y Euro</span>
+<span style="color:#c678dd">async function</span> <span style="color:#61afef">getDivisas</span>() {
+    <span style="color:#c678dd">const</span> url = <span class="json-string">'https://dolarctd.fabrictd.com/api/v2/rates?base=USD&quotes=ARS,EUR'</span>;
+    
+    <span style="color:#c678dd">try</span> {
+        <span style="color:#c678dd">const</span> response = <span style="color:#c678dd">await</span> fetch(url);
+        <span style="color:#c678dd">if</span> (!response.ok) {
+            <span style="color:#c678dd">throw new</span> <span style="color:#e5c07b">Error</span>(<span class="json-string">`Error HTTP: ${response.status}`</span>);
+        }
+        
+        <span style="color:#c678dd">const</span> data = <span style="color:#c678dd">await</span> response.json();
+        console.log(<span class="json-string">"Resultados:"</span>, data);
+        
+        <span class="code-comment">// Iterar el Array V2</span>
+        data.forEach(item => {
+             console.log(<span class="json-string">`1 ${item.base} equivale a ${item.rate} ${item.quote}`</span>);
+        });
+        
+    } <span style="color:#c678dd">catch</span> (error) {
+        console.error(<span class="json-string">"Fallo al contactar la API:"</span>, error);
+    }
+}</pre>
+
+                <h3>Python (Requests)</h3>
+                <pre class="code-block">
+<span style="color:#c678dd">import</span> requests
+
+<span style="color:#c678dd">def</span> <span style="color:#61afef">obtener_tasas_historicas</span>(fecha, base):
+    url = <span class="json-string">f"https://dolarctd.fabrictd.com/api/v2/rates?date={fecha}&base={base}"</span>
+    
+    <span style="color:#c678dd">try</span>:
+        respuesta = requests.get(url, timeout=<span class="json-number">5</span>)
+        respuesta.raise_for_status() <span class="code-comment"># Valida que sea un código 200</span>
+        
+        datos = respuesta.json()
+        <span style="color:#c678dd">for</span> item <span style="color:#c678dd">in</span> datos:
+            print(<span class="json-string">f"{item['quote']}: {item['rate']}"</span>)
+            
+    <span style="color:#c678dd">except</span> requests.exceptions.RequestException <span style="color:#c678dd">as</span> error:
+        print(<span class="json-string">f"Error de red o API: {error}"</span>)</pre>
+            </section>
+
+            <section id="errors" class="docs-section fade-in-up delay-4">
+                <h2><i class="fas fa-bug"></i> Códigos de Error HTTP</h2>
+                <p>Nuestra API devuelve los códigos HTTP estándar para facilitarte el manejo de excepciones en tu código:</p>
+                <table class="params-table">
+                    <thead><tr><th>Código</th><th>Significado y Solución</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:var(--positive)">200 OK</strong></td>
+                            <td>Todo ha salido perfecto. El JSON contiene los datos solicitados.</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent)">400 Bad Request</strong></td>
+                            <td>Normalmente indica que enviaste un parámetro malformado (ej. una moneda que no existe como `ZZZ`, o una fecha imposible como `2025-15-40`).</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--negative)">404 Not Found</strong></td>
+                            <td>Estás consultando una fecha anterior a 1999 o una ruta inexistente.</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--negative)">500 Internal Error</strong></td>
+                            <td>Fallo en nuestros servidores Netlify. El proxy no pudo comunicarse con el proveedor ascendente.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="live" class="live-test-box fade-in-up delay-4">
+                <h2><i class="fas fa-terminal"></i> Prueba Interactiva V2</h2>
+                <p>Ejecuta una petición GET real directamente desde esta ventana y analiza la respuesta en la consola integrada.</p>
+
+                <button id="testApiBtn" class="btn-terminal">
+                    <i class="fas fa-play"></i> RUN: GET /api/v2/rates?base=USD&amp;quotes=ARS,EUR
+                </button>
+
+                <pre class="code-block terminal-output"><code id="apiResponse"><span class="code-comment">// Esperando instrucción...</span></code></pre>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="footer">
+        <div class="footer-disclaimer">
+            <strong>⚠ Aviso Legal:</strong> La API de DólarCTD extrae datos de fuentes públicas y se ofrece sin garantías de disponibilidad al 100% (SLA). No la uses para transacciones automatizadas de alto riesgo.
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DólarCTD · Desarrollado con <i class="fas fa-heart" style="color:var(--negative)"></i> por
+                <a href="https://github.com/FabriCTD" target="_blank" rel="noopener">FabriCTD</a>
+            </p>
+            <p>Infraestructura Serverless API</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scrolling Sidebar
+        const sections = document.querySelectorAll('.docs-section, .live-test-box');
+        const navLinks = document.querySelectorAll('.docs-sidebar a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) { 
+                    current = section.getAttribute('id'); 
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) { 
+                    link.classList.add('active'); 
+                }
+            });
+        });
+
+        // Script de Consola Virtual
+        document.getElementById('testApiBtn').addEventListener('click', async () => {
+            const resultBox = document.getElementById('apiResponse');
+            const btn = document.getElementById('testApiBtn');
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ejecutando...';
+            resultBox.innerHTML = '<span class="code-comment">&gt; Conectando al Proxy Serverless de DolarCTD (localhost o netlify)...</span>';
+
+            try {
+                // Hacemos el Fetch a nuestra propia API local
+                const response = await fetch('/api/v2/rates?base=USD&quotes=ARS,EUR');
+                const textData = await response.text();
+
+                try {
+                    const data = JSON.parse(textData);
+                    let formattedJSON = JSON.stringify(data, null, 2)
+                        .replace(/"(.*?)":/g, '<span class="json-key">"$1"</span>:')
+                        .replace(/:\s"(.*?)"/g, ': <span class="json-string">"$1"</span>')
+                        .replace(/:\s(true|false)/g, ': <span class="json-boolean">$1</span>')
+                        .replace(/:\s([0-9.-]+)/g, ': <span class="json-number">$1</span>');
+
+                    resultBox.innerHTML = formattedJSON;
+                } catch (e) {
+                    resultBox.innerHTML = `<span style="color:var(--negative)">[FATAL ERROR] La respuesta no es JSON válido:</span>\n${textData.substring(0, 300)}`;
+                }
+            } catch (error) {
+                resultBox.innerHTML = `<span style="color:var(--negative)">[NETWORK ERROR] No se pudo establecer conexión: ${error.message}</span>`;
+            } finally {
+                btn.innerHTML = '<i class="fas fa-play"></i> RUN: GET /api/v2/rates?base=USD&amp;quotes=ARS,EUR';
+            }
+        });
+    </script>
+</body>
+</html>

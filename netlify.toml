@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+
+# Redirigir peticiones de la API a la Netlify Function
+# Si no existe (ej: /api/v2/rates), mandará la petición a nuestro proxy.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/proxy"
+  status = 200

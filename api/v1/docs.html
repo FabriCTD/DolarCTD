@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Primario -->
+    <title>API Divisas v1 Legacy | Referencia — DólarCTD</title>
+    <meta name="description" content="Documentación de la API de divisas v1 Legacy de DólarCTD. Datos de tipo de cambio gratuitos en formato JSON para sistemas antiguos. Se recomienda migrar a v2.">
+    <meta name="keywords" content="API tipo de cambio v1, API divisas JSON, api monedas, FabriCTD API, legacy exchange api">
+    <meta name="author" content="FabriCTD">
+    <meta name="robots" content="noindex, follow"> <!-- No indexar legacy si es posible -->
+    <link rel="canonical" href="https://dolarctd.fabrictd.com/api/v1/docs.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="apple-touch-icon" href="../../favicon.png">
+
+    <!-- Fuentes & Íconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/docs.css">
+    <style>
+        /* Ajustes específicos para versión Legacy (Tonos más apagados / de advertencia) */
+        .docs-sidebar h3 { color: #f59e0b; }
+        .docs-sidebar a.active::before { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+        .docs-section h2 i { color: #f59e0b; }
+        .docs-section::after { background: linear-gradient(90deg, #f59e0b, transparent); }
+        .warning-banner {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 2.5rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .warning-banner a {
+            color: #f59e0b;
+            text-decoration: underline;
+            font-weight: 700;
+        }
+        .method-badge.legacy {
+            background: #64748b; /* Gris apagado para GET de v1 */
+        }
+        .btn-terminal.legacy {
+            background: #475569;
+            box-shadow: 0 8px 20px rgba(71, 85, 105, 0.3);
+        }
+        .btn-terminal.legacy:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="animated-bg"></div>
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-logo">
+                    <div>
+                        <h1 class="header-title" style="color: #cbd5e1;">Dólar<span style="color:#f59e0b">CTD</span></h1>
+                        <p class="header-subtitle" style="color: #94a3b8;">Documentación API v1 (Legacy)</p>
+                    </div>
+                </div>
+                <nav class="header-links">
+                    <a href="../../divisas/index.html" class="dev-link" style="color: #f59e0b; border-color: rgba(245,158,11,0.3);">
+                        <i class="fas fa-arrow-left"></i> Volver al Conversor
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══ MAIN DOCS ══ -->
+    <div class="container docs-wrapper">
+        
+        <!-- Sidebar -->
+        <aside class="docs-sidebar fade-in-up delay-1">
+            <h3>Estado del API</h3>
+            <ul>
+                <li><a href="#migration" class="active">Guía de Migración</a></li>
+            </ul>
+            <h3>Endpoints Legacy</h3>
+            <ul>
+                <li><a href="#latest">Tasas Actuales (/latest)</a></li>
+                <li><a href="#historical">Tasas Históricas (/YYYY-MM-DD)</a></li>
+            </ul>
+            <h3>Playground</h3>
+            <ul>
+                <li><a href="#live">Terminal v1 <i class="fas fa-terminal" style="margin-left: 5px;"></i></a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <main class="docs-content">
+
+            <div class="warning-banner fade-in-up delay-2">
+                <h4 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-exclamation-triangle" style="font-size:1.2rem"></i> Aviso Importante: Versión Deprecada
+                </h4>
+                Estás visualizando la documentación de la **API v1**. Aunque seguirá funcionando por motivos de retrocompatibilidad, no recibirá nuevas funciones ni optimizaciones de velocidad. Te recomendamos encarecidamente migrar todo tu desarrollo actual y futuro hacia nuestra <a href="../v2/docs.html">API Versión 2</a>.
+            </div>
+
+            <section id="migration" class="docs-section fade-in-up delay-2">
+                <h2><i class="fas fa-random"></i> Guía de Migración de v1 a v2</h2>
+                <p>Migrar a la versión 2 es un proceso extremadamente sencillo pero que requiere atención a los cambios estructurales en el formato JSON devuelto.</p>
+
+                <h3>1. Cambios en las Rutas (URL)</h3>
+                <ul style="color: var(--text-muted); line-height: 1.8; margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                    <li>En v1 usabas <code>/api/v1/latest</code>. En v2 usarás <code>/api/v2/rates</code>.</li>
+                    <li>En v1 usabas <code>/api/v1/2020-01-01</code>. En v2 pasarás la fecha como parámetro: <code>/api/v2/rates?date=2020-01-01</code>.</li>
+                    <li>En v1 usabas <code>?symbols=ARS</code>. En v2 se unificó a <code>?quotes=ARS</code>.</li>
+                </ul>
+
+                <h3>2. Diferencias Estructurales del Payload (JSON)</h3>
+                <p>La v1 retorna un objeto (Object) estático donde las monedas son llaves (keys). La v2 retorna un Arreglo (Array) dinámico, ideal para iterar con funciones modernas como <code>map()</code> o <code>forEach()</code>.</p>
+                
+                <table class="params-table">
+                    <thead><tr><th>Formato v1 (Legacy)</th><th>Formato v2 (Moderno)</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+<pre style="background:transparent; padding:0; border:none; box-shadow:none; font-family:monospace; font-size:0.8rem; color:#cbd5e1;">
+{
+  "base": "USD",
+  "date": "2026-07-16",
+  "rates": {
+    "ARS": 1015.5,
+    "EUR": 0.912
+  }
+}
+</pre>
+                            </td>
+                            <td>
+<pre style="background:transparent; padding:0; border:none; box-shadow:none; font-family:monospace; font-size:0.8rem; color:#86efac;">
+[
+  {
+    "base": "USD",
+    "quote": "ARS",
+    "rate": 1015.5
+  },
+  {
+    "base": "USD",
+    "quote": "EUR",
+    "rate": 0.912
+  }
+]
+</pre>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="latest" class="docs-section fade-in-up delay-3">
+                <h2><i class="fas fa-clock"></i> Tasas Actuales (/latest)</h2>
+                <p>Obtiene las tasas de cambio de forma similar a la API antigua del BCE (Estructura Objeto).</p>
+
+                <div class="endpoint-url">
+                    <span class="method-badge legacy">GET</span>
+                    <span class="url-text">
+                        <span class="host">https://dolarctd.fabrictd.com</span><span class="route">/api/v1/latest</span><span class="query">?base=USD&amp;symbols=ARS,EUR</span>
+                    </span>
+                </div>
+
+                <table class="params-table">
+                    <thead>
+                        <tr><th>Parámetro</th><th>Descripción</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="param-name">base</span></td>
+                            <td>Moneda base (Por defecto EUR).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">symbols</span></td>
+                            <td>Monedas objetivo separadas por comas (Ej: ARS,EUR).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="live" class="live-test-box fade-in-up delay-3" style="border-color: rgba(245, 158, 11, 0.3);">
+                <h2 style="color: #cbd5e1;"><i class="fas fa-terminal" style="color: #64748b;"></i> Prueba Interactiva v1</h2>
+                <p>Verifica el funcionamiento del endpoint Legacy en la infraestructura actual.</p>
+
+                <button id="testApiBtn" class="btn-terminal legacy">
+                    <i class="fas fa-play"></i> RUN: GET /api/v1/latest?base=USD&amp;symbols=ARS,EUR
+                </button>
+
+                <pre class="code-block terminal-output"><code id="apiResponse"><span class="code-comment">// Esperando instrucción...</span></code></pre>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="footer">
+        <div class="footer-disclaimer">
+            <strong>⚠ API Deprecada:</strong> Las respuestas de esta versión v1 son garantizadas pero su rendimiento puede verse mermado.
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DólarCTD · Desarrollado con <i class="fas fa-heart" style="color:var(--negative)"></i> por
+                <a href="https://github.com/FabriCTD" target="_blank" rel="noopener">FabriCTD</a>
+            </p>
+            <p>Infraestructura Serverless API Legacy</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scrolling Sidebar
+        const sections = document.querySelectorAll('.docs-section, .live-test-box');
+        const navLinks = document.querySelectorAll('.docs-sidebar a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) { 
+                    current = section.getAttribute('id'); 
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) { 
+                    link.classList.add('active'); 
+                }
+            });
+        });
+
+        // Script de Consola Virtual V1
+        document.getElementById('testApiBtn').addEventListener('click', async () => {
+            const resultBox = document.getElementById('apiResponse');
+            const btn = document.getElementById('testApiBtn');
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ejecutando v1...';
+            resultBox.innerHTML = '<span class="code-comment">&gt; Conectando al Proxy Serverless (Legacy Mode)...</span>';
+
+            try {
+                // Fetch al legacy
+                const response = await fetch('/api/v1/latest?base=USD&symbols=ARS,EUR');
+                const textData = await response.text();
+
+                try {
+                    const data = JSON.parse(textData);
+                    let formattedJSON = JSON.stringify(data, null, 2)
+                        .replace(/"(.*?)":/g, '<span class="json-key">"$1"</span>:')
+                        .replace(/:\s"(.*?)"/g, ': <span class="json-string">"$1"</span>')
+                        .replace(/:\s([0-9.-]+)/g, ': <span class="json-number">$1</span>');
+
+                    resultBox.innerHTML = formattedJSON;
+                } catch (e) {
+                    resultBox.innerHTML = `<span style="color:var(--negative)">[FATAL ERROR] Parseo JSON fallido.</span>\n${textData.substring(0, 300)}`;
+                }
+            } catch (error) {
+                resultBox.innerHTML = `<span style="color:var(--negative)">[NETWORK ERROR] Conexión rechazada: ${error.message}</span>`;
+            } finally {
+                btn.innerHTML = '<i class="fas fa-play"></i> RUN: GET /api/v1/latest?base=USD&amp;symbols=ARS,EUR';
+            }
+        });
+    </script>
+</body>
+</html>
