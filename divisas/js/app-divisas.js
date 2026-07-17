@@ -3,7 +3,7 @@
  * Adaptado de divisas.fabrictd.com para encajar en el ecosistema DolarCTD
  */
 
-const API_V2 = '/api/v2';
+const API_V2 = 'https://api.frankfurter.dev/v2';
 
 const flagExceptions = { 'EUR': 'eu', 'ZAR': 'za', 'ANG': 'cw', 'BTC': 'btc', 'XAG': 'xx', 'XAU': 'xx', 'XDR': 'xx' };
 function getFlagUrl(code) {
